@@ -26,3 +26,4 @@
 		<url-pattern>/registerStudent</url-pattern>
 	</servlet-mapping>
 </web-app>
+

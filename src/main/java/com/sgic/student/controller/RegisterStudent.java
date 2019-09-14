@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.sgic.student.dao.StudentDao;
 import com.sgic.student.dao.impl.StudentDaoImpl;
 import com.sgic.student.entity.Student;
@@ -22,15 +25,14 @@ public class RegisterStudent extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// super.doPost(req, resp);
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("config.xml");
+		StudentDao sdao = (StudentDao) ctx.getBean("StudentDao");
 		String fname = (String) req.getAttribute("fname");
 		String lname = (String) req.getAttribute("lname");
 		Student s = new Student();
 		s.setFirstname(fname);
 		s.setLastname(lname);
-		StudentDao sd = new StudentDaoImpl();
-		int n = sd.save(s);
+		int n = sdao.save(s);
 		String msg;
 		if(n!=0) {
 			msg = "Success! fully update";

@@ -10,15 +10,19 @@ import com.sgic.student.dao.StudentDao;
 import com.sgic.student.entity.Student;
 
 public class StudentDaoImpl implements StudentDao{
-	ApplicationContext ctx = new ClassPathXmlApplicationContext("config.xml");
 	 
-	JdbcTemplate conn =(JdbcTemplate) ctx.getBean("jdbcTemplate");
+	private JdbcTemplate conn ;
 
-	
+
+	public void setConn(JdbcTemplate conn) {
+		this.conn = conn;
+	}
+
+
 	@Override
 	public int save(Student student) {
-		String sql = "INSERT INTO `employee`(`firstname`,`lastname`) VALUES (?,?)";
-		int result = conn.update(sql, new Integer(1), "tharsikan", "lastnaem");
+		String sql = "INSERT INTO `students`(`firstname`,`lastname`) VALUES (?,?)";
+		int result = conn.update(sql, student.getFirstname(), student.getLastname());
 		return result;
 	}
 
